@@ -17,11 +17,8 @@ module OpenIdAuthentication
   def self.new(app)
     store = OpenIdAuthentication.store
     if store.nil?
-      # REMI
-      # Rails.logger.warn "OpenIdAuthentication.store is nil. Using in-memory store."
-      raise "OpenIdAuthentication.store is nil. Using in-memory store."
+      Rails.logger.warn "OpenIdAuthentication.store is nil. Using in-memory store."
     end
-
 
     ::Rack::OpenID.new(app, OpenIdAuthentication.store)
   end
@@ -148,7 +145,7 @@ module OpenIdAuthentication
   private
   
     def open_id_identifier
-      params[:openid_identifier] || params[:openid_url]
+      params[:openid_url] || params[:openid_identifier]
     end
 
     def begin_open_id_authentication(identifier, options = {})
@@ -201,5 +198,4 @@ module OpenIdAuthentication
       request_token = OAuth::RequestToken.new google_oauth_consumer, authorized_request_token.request_token
       request_token.get_access_token
     end
-        
 end

@@ -47,7 +47,7 @@ module Rack
         end
         
         unless scopes_str.empty?
-          oauth_scope = scopes_str.join(',')        
+          oauth_scope = scopes_str.join(' ')
           oauth_request_token_request = ::OpenID::OAuthHybrid::Request.new(params["oauth_consumer_key"], oauth_scope)
           open_id_request.add_extension(oauth_request_token_request)
         end
